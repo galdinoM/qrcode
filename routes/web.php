@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DataController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::middleware(['auth'])->group(function () {
+    Route::post('/upload', [UploadController::class, 'upload'])->name('upload');
+});
+Route::middleware('auth:sanctum')->get('/data', [DataController::class, 'index']);
+
+
+require __DIR__ . '/auth.php';
